@@ -11,7 +11,7 @@
   class Wechat {
 
     /**
-     * 调试模式，将错误通过回复文本消息显示
+     * 调试模式，将错误通过文本消息回复显示
      *
      * @var boolean
      */
@@ -37,7 +37,7 @@
 
       $this->debug = $debug;
       set_error_handler(array(&$this, 'errorHandler'));
-      // 设置错误处理函数，将错误通过回复文本消息显示
+      // 设置错误处理函数，将错误通过文本消息回复显示
 
       $xml = (array) simplexml_load_string($GLOBALS['HTTP_RAW_POST_DATA'], 'SimpleXMLElement', LIBXML_NOCDATA);
 
@@ -92,49 +92,49 @@
     }
 
     /**
-     * 用户关注时时触发，用于子类继承或重写
+     * 用户关注时触发，用于子类重写
      *
      * @return void
      */
     protected function onSubscribe() {}
 
     /**
-     * 用户取消关注时时触发，用于子类继承或重写
+     * 用户取消关注时触发，用于子类重写
      *
      * @return void
      */
     protected function onUnsubscribe() {}
 
     /**
-     * 收到文本消息时触发，用于子类继承或重写
+     * 收到文本消息时触发，用于子类重写
      *
      * @return void
      */
     protected function onText() {}
 
     /**
-     * 收到图片消息时触发，用于子类继承或重写
+     * 收到图片消息时触发，用于子类重写
      *
      * @return void
      */
     protected function onImage() {}
 
     /**
-     * 收到地理位置消息时触发，用于子类继承或重写
+     * 收到地理位置消息时触发，用于子类重写
      *
      * @return void
      */
     protected function onLocation() {}
 
     /**
-     * 收到链接消息时触发，用于子类继承或重写
+     * 收到链接消息时触发，用于子类重写
      *
      * @return void
      */
     protected function onLink() {}
 
     /**
-     * 收到未知类型消息时触发，用于子类继承或重写
+     * 收到未知类型消息时触发，用于子类重写
      *
      * @return void
      */
@@ -167,7 +167,7 @@
 
     /**
      * 回复图文消息
-     * @param  array   $items    由单条图文消息 NewsResponseItem() 组成的数组
+     * @param  array   $items    由单条图文消息类型 NewsResponseItem() 组成的数组
      * @param  integer $funcFlag 默认为0，设为1时星标刚才收到的消息
      * @return void
      */
@@ -222,7 +222,7 @@
     }
 
     /**
-     * 自定义的错误处理函数，将 PHP 错误通过回复文本消息显示
+     * 自定义的错误处理函数，将 PHP 错误通过文本消息回复显示
      * @param  int $level   错误代码
      * @param  string $msg  错误内容
      * @param  string $file 产生错误的文件

@@ -11,6 +11,13 @@
   class Wechat {
 
     /**
+     * 调试模式，将错误通过回复文本消息显示
+     *
+     * @var boolean
+     */
+    private $debug;
+
+    /**
      * 以数组的形式保存微信服务器每次发来的请求
      *
      * @var array
@@ -21,11 +28,16 @@
      * 初始化，判断此次请求是否为验证请求，并以数组形式保存
      *
      * @param string $token 验证信息
+     * @param boolean $debug 调试模式，默认为关闭
      */
-    public function __construct($token) {
+    public function __construct($token, $debug = FALSE) {
       if ($this->isValid() && $this->validateSignature($token)) {
         exit($_GET['echostr']);
       }
+
+      $this->debug = $debug;
+      set_error_handler(array(&$this, 'errorHandler'));
+      // 设置错误处理函数，将错误通过回复文本消息显示
 
       $xml = (array) simplexml_load_string($GLOBALS['HTTP_RAW_POST_DATA'], 'SimpleXMLElement', LIBXML_NOCDATA);
 
@@ -62,7 +74,7 @@
     /**
      * 获取本次请求中的参数，不区分大小
      *
-     * @param  string $param 参数名
+     * @param  string $param 参数名，默认为无参
      * @return mixed
      */
     protected function getRequest($param = FALSE) {
@@ -132,7 +144,7 @@
      * 回复文本消息
      *
      * @param  string  $content  消息内容
-     * @param  integer $funcFlag 设为1时星标刚才收到的消息
+     * @param  integer $funcFlag 默认为0，设为1时星标刚才收到的消息
      * @return void
      */
     protected function responseText($content, $funcFlag = 0) {
@@ -146,7 +158,7 @@
      * @param  string  $description 音乐描述
      * @param  string  $musicUrl    音乐链接
      * @param  string  $hqMusicUrl  高质量音乐链接，Wi-Fi 环境下优先使用
-     * @param  integer $funcFlag    设为1时星标刚才收到的消息
+     * @param  integer $funcFlag    默认为0，设为1时星标刚才收到的消息
      * @return void
      */
     protected function responseMusic($title, $description, $musicUrl, $hqMusicUrl, $funcFlag = 0) {
@@ -156,7 +168,7 @@
     /**
      * 回复图文消息
      * @param  array   $items    由单条图文消息 NewsResponseItem() 组成的数组
-     * @param  integer $funcFlag 设为1时星标刚才收到的消息
+     * @param  integer $funcFlag 默认为0，设为1时星标刚才收到的消息
      * @return void
      */
     protected function responseNews($items, $funcFlag = 0) {
@@ -207,6 +219,53 @@
           break;
 
       }
+    }
+
+    /**
+     * 自定义的错误处理函数，将 PHP 错误通过回复文本消息显示
+     * @param  int $level   错误代码
+     * @param  string $msg  错误内容
+     * @param  string $file 产生错误的文件
+     * @param  int $line    产生错误的行数
+     * @return void
+     */
+    protected function errorHandler($level, $msg, $file, $line) {
+      if ( ! $this->debug) {
+        return;
+      }
+
+      $error_type = array(
+        // E_ERROR             => 'Error',
+        E_WARNING           => 'Warning',
+        // E_PARSE             => 'Parse Error',
+        E_NOTICE            => 'Notice',
+        // E_CORE_ERROR        => 'Core Error',
+        // E_CORE_WARNING      => 'Core Warning',
+        // E_COMPILE_ERROR     => 'Compile Error',
+        // E_COMPILE_WARNING   => 'Compile Warning',
+        E_USER_ERROR        => 'User Error',
+        E_USER_WARNING      => 'User Warning',
+        E_USER_NOTICE       => 'User Notice',
+        E_STRICT            => 'Strict',
+        E_RECOVERABLE_ERROR => 'Recoverable Error',
+        E_DEPRECATED        => 'Deprecated',
+        E_USER_DEPRECATED   => 'User Deprecated',
+      );
+
+      $template = <<<ERR
+PHP 报错啦！
+
+%s: %s
+File: %s
+Line: %s
+ERR;
+
+      $this->responseText(sprintf($template,
+        $error_type[$level],
+        $msg,
+        $file,
+        $line
+      ));
     }
 
   }

@@ -278,6 +278,7 @@ ERR;
     protected $toUserName;
     protected $fromUserName;
     protected $funcFlag;
+    protected $template;
 
     public function __construct($toUserName, $fromUserName, $funcFlag) {
       $this->toUserName = $toUserName;
@@ -296,7 +297,11 @@ ERR;
 
     protected $content;
 
-    protected $template = <<<XML
+    public function __construct($toUserName, $fromUserName, $content, $funcFlag = 0) {
+      parent::__construct($toUserName, $fromUserName, $funcFlag);
+
+      $this->content = $content;
+      $this->template = <<<XML
 <xml>
   <ToUserName><![CDATA[%s]]></ToUserName>
   <FromUserName><![CDATA[%s]]></FromUserName>
@@ -306,10 +311,6 @@ ERR;
   <FuncFlag>%s<FuncFlag>
 </xml>
 XML;
-
-    public function __construct($toUserName, $fromUserName, $content, $funcFlag = 0) {
-      parent::__construct($toUserName, $fromUserName, $funcFlag);
-      $this->content = $content;
     }
 
     public function __toString() {
@@ -334,7 +335,14 @@ XML;
     protected $musicUrl;
     protected $hqMusicUrl;
 
-    protected $template = <<<XML
+    public function __construct($toUserName, $fromUserName, $title, $description, $musicUrl, $hqMusicUrl, $funcFlag) {
+      parent::__construct($toUserName, $fromUserName, $funcFlag);
+
+      $this->title = $title;
+      $this->description = $description;
+      $this->musicUrl = $musicUrl;
+      $this->hqMusicUrl = $hqMusicUrl;
+      $this->template = <<<XML
 <xml>
   <ToUserName><![CDATA[%s]]></ToUserName>
   <FromUserName><![CDATA[%s]]></FromUserName>
@@ -349,13 +357,6 @@ XML;
   <FuncFlag>%s<FuncFlag>
 </xml>
 XML;
-
-    public function __construct($toUserName, $fromUserName, $title, $description, $musicUrl, $hqMusicUrl, $funcFlag) {
-      parent::__construct($toUserName, $fromUserName, $funcFlag);
-      $this->title = $title;
-      $this->description = $description;
-      $this->musicUrl = $musicUrl;
-      $this->hqMusicUrl = $hqMusicUrl;
     }
 
     public function __toString() {
@@ -380,7 +381,11 @@ XML;
 
     protected $items = array();
 
-    protected $template = <<<XML
+    public function __construct($toUserName, $fromUserName, $items, $funcFlag) {
+      parent::__construct($toUserName, $fromUserName, $funcFlag);
+
+      $this->items = $items;
+      $this->template = <<<XML
 <xml>
   <ToUserName><![CDATA[%s]]></ToUserName>
   <FromUserName><![CDATA[%s]]></FromUserName>
@@ -393,10 +398,6 @@ XML;
   <FuncFlag>%s<FuncFlag>
 </xml>'
 XML;
-
-    public function __construct($toUserName, $fromUserName, $items, $funcFlag) {
-      parent::__construct($toUserName, $fromUserName, $funcFlag);
-      $this->items = $items;
     }
 
     public function __toString() {
@@ -421,8 +422,14 @@ XML;
     protected $description;
     protected $picUrl;
     protected $url;
+    protected $template;
 
-    protected $template = <<<XML
+    public function __construct($title, $description, $picUrl, $url) {
+      $this->title = $title;
+      $this->description = $description;
+      $this->picUrl = $picUrl;
+      $this->url = $url;
+      $this->template = <<<XML
 <item>
   <Title><![CDATA[%s]]></Title>
   <Description><![CDATA[%s]]></Description>
@@ -430,12 +437,6 @@ XML;
   <Url><![CDATA[%s]]></Url>
 </item>
 XML;
-
-    public function __construct($title, $description, $picUrl, $url) {
-      $this->title = $title;
-      $this->description = $description;
-      $this->picUrl = $picUrl;
-      $this->url = $url;
     }
 
     public function __toString() {

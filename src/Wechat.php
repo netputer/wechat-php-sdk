@@ -31,8 +31,17 @@
      * @param boolean $debug 调试模式，默认为关闭
      */
     public function __construct($token, $debug = FALSE) {
-      if ($this->isValid() && $this->validateSignature($token)) {
+      if (!$this->validateSignature($token)) {
+        exit('签名验证失败');
+      }
+      
+      if ($this->isValid()) {
+        // 网址接入验证
         exit($_GET['echostr']);
+      }
+      
+      if (!isset($GLOBALS['HTTP_RAW_POST_DATA'])) {
+        exit('缺少数据');
       }
 
       $this->debug = $debug;
@@ -55,12 +64,16 @@
     }
 
     /**
-     * 判断验证请求的签名信息是否正确
+     * 验证此次请求的签名信息
      *
      * @param  string $token 验证信息
      * @return boolean
      */
     private function validateSignature($token) {
+      if ( ! (isset($_GET['signature']) && isset($_GET['timestamp']) && isset($_GET['nonce']))) {
+        return FALSE;
+      }
+      
       $signature = $_GET['signature'];
       $timestamp = $_GET['timestamp'];
       $nonce = $_GET['nonce'];

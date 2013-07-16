@@ -409,7 +409,7 @@ XML;
     %s
   </Articles>
   <FuncFlag>%s<FuncFlag>
-</xml>'
+</xml>
 XML;
     }
 

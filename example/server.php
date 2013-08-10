@@ -83,6 +83,24 @@
       $this->responseText('收到了未知类型消息：' . $this->getRequest('msgtype'));
     }
 
+    /**
+    * 收到事件类型消息时触发，回复收到的消息类型
+    *
+    * @return void
+    */
+    protected function onEvent() {
+      $EventKey = $this->getRequest("EventKey");
+      switch ($EventKey) {
+        case 'KEY_1':
+          $this->responseText('你点击了Key值为"KEY_1"的按钮！');
+          break;
+        
+        default:
+          $this->responseText('收到了未知的事件消息：' . $EventKey);
+          break;
+      }
+    }
+
   }
 
   $wechat = new MyWechat('weixin', TRUE);

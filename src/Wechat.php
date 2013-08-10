@@ -154,6 +154,13 @@
     protected function onUnknown() {}
 
     /**
+     * 收到事件类型消息时触发，用于子类重写
+     *
+     * @return void
+     */
+    protected function onEvent() {}
+
+    /**
      * 回复文本消息
      *
      * @param  string  $content  消息内容
@@ -207,6 +214,9 @@
               $this->onUnsubscribe();
               break;
 
+            default:
+              $this->onEvent();
+              break;
           }
 
           break;

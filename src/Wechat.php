@@ -321,7 +321,7 @@ ERR;
   <CreateTime>%s</CreateTime>
   <MsgType><![CDATA[text]]></MsgType>
   <Content><![CDATA[%s]]></Content>
-  <FuncFlag>%s<FuncFlag>
+  <FuncFlag>%s</FuncFlag>
 </xml>
 XML;
     }
@@ -367,7 +367,7 @@ XML;
     <MusicUrl><![CDATA[%s]]></MusicUrl>
     <HQMusicUrl><![CDATA[%s]]></HQMusicUrl>
   </Music>
-  <FuncFlag>%s<FuncFlag>
+  <FuncFlag>%s</FuncFlag>
 </xml>
 XML;
     }
@@ -408,7 +408,7 @@ XML;
   <Articles>
     %s
   </Articles>
-  <FuncFlag>%s<FuncFlag>
+  <FuncFlag>%s</FuncFlag>
 </xml>
 XML;
     }

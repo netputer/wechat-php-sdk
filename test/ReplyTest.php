@@ -96,14 +96,18 @@
       $this->fillTextMsg('收到文本消息');
       $wechat = new MyWechat($this->token);
 
-      $items = array(        
+      $items = array(
         new NewsResponseItem('Travis CI',
-                             'Free Hosted Continuous Integration Platform for the Open Source Community',
-                             'https://travis-ci.org/netputer/wechat-php-sdk.png',
-                             'https://travis-ci.org/netputer/wechat-php-sdk')
+                                   'Free Hosted Continuous Integration Platform for the Open Source Community',
+                                   'https://travis-ci.org/netputer/wechat-php-sdk.png',
+                                   'https://travis-ci.org/netputer/wechat-php-sdk'),
+        new NewsResponseItem('Travis CI 2',
+                                   '2 Free Hosted Continuous Integration Platform for the Open Source Community',
+                                   'https://travis-ci.org/netputer/wechat-php-sdk.png',
+                                   'https://travis-ci.org/netputer/wechat-php-sdk')
       );
 
-      // 回复音乐消息
+      // 回复图文消息
       $wechat->publicResponseNews($items);
 
       // 截获输出，解析
@@ -116,13 +120,20 @@
       $this->assertEquals('news', $this->getResponseField('msgtype'));
 
       // 验证图文消息内容
-      $this->assertEquals('1', $this->getResponseField('articlecount'));
+      $this->assertEquals('2', $this->getResponseField('articlecount'));
 
       $articles = (array) $this->getResponseField('articles');
-      $article = array_change_key_case((array) $articles['item'], CASE_LOWER);
+      $article = array_change_key_case((array) $articles['item'][0], CASE_LOWER);
       $this->assertEquals(array(
                             'title' => 'Travis CI',
                             'description' => 'Free Hosted Continuous Integration Platform for the Open Source Community',
+                            'picurl' => 'https://travis-ci.org/netputer/wechat-php-sdk.png',
+                            'url' => 'https://travis-ci.org/netputer/wechat-php-sdk'),
+                            $article);
+      $article = array_change_key_case((array) $articles['item'][1], CASE_LOWER);
+      $this->assertEquals(array(
+                            'title' => 'Travis CI 2',
+                            'description' => '2 Free Hosted Continuous Integration Platform for the Open Source Community',
                             'picurl' => 'https://travis-ci.org/netputer/wechat-php-sdk.png',
                             'url' => 'https://travis-ci.org/netputer/wechat-php-sdk'),
                             $article);

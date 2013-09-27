@@ -147,6 +147,14 @@
     protected function onLink() {}
 
     /**
+     * 服务号的菜单点击事件，用户点击菜单时触发，用于子类重写
+     *
+     * @return void
+     */
+    protected function onCLICK() {}
+
+
+    /**
      * 收到未知类型消息时触发，用于子类重写
      *
      * @return void
@@ -206,7 +214,9 @@
             case 'unsubscribe':
               $this->onUnsubscribe();
               break;
-
+            case 'CLICK':
+              $this->onCLICK();
+              break;
           }
 
           break;

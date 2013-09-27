@@ -29,6 +29,19 @@
     protected function onUnsubscribe() {
       // 「悄悄的我走了，正如我悄悄的来；我挥一挥衣袖，不带走一片云彩。」
     }
+    
+    /**
+     * 收到菜单点击时触发，回复内容
+     *
+     * @return void
+     */    
+    protected function onCLICK() {
+      if ($this->getRequest('EventKey') == "about") { //根据菜单的键值定义做判断
+        $this->responseText('你点击了about菜单');
+				} else {
+				$this->responseText('这个菜单没有定义');
+				}
+    }
 
     /**
      * 收到文本消息时触发，回复收到的文本消息内容

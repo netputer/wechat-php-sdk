@@ -214,6 +214,7 @@
             case 'unsubscribe':
               $this->onUnsubscribe();
               break;
+              
             case 'CLICK':
               $this->onCLICK();
               break;

@@ -36,11 +36,11 @@
      * @return void
      */    
     protected function onCLICK() {
-      if ($this->getRequest('EventKey') == "about") { //根据菜单的键值定义做判断
-        $this->responseText('你点击了about菜单');
-				} else {
-				$this->responseText('这个菜单没有定义');
-				}
+      if ($this->getRequest('EventKey') == "key") { //按钮KEY值，用于消息接口(event类型)推送，不超过128字节
+        $this->responseText('你点击了菜单');
+      } else {
+	$this->responseText('这个菜单没有定义');
+      }
     }
 
     /**

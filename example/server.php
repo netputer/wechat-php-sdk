@@ -27,7 +27,7 @@
      * @return void
      */
     protected function onScan() {
-      $this->responseText("二维码的EventKey：{$this->getRequest('EventKey')}");
+      $this->responseText('二维码的EventKey：' . $this->getRequest('EventKey'));
     }
 
     /**
@@ -45,7 +45,7 @@
      * @return void
      */
     protected function onEventLocation() {
-      $this->responseText("收到了位置推送：{$this->getRequest('Latitude')} ,{$this->getRequest('Longitude')}");
+      $this->responseText('收到了位置推送：' . $this->getRequest('Latitude') . ',' . $this->getRequest('Longitude'));
     }
 
     /**
@@ -107,7 +107,7 @@
      * @return void
      */
     protected function onClick() {
-      $this->responseText("你点击了菜单：{$this->getRequest('EventKey')}");
+      $this->responseText('你点击了菜单：' . $this->getRequest('EventKey'));
     }
 
     /**

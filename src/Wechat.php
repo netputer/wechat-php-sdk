@@ -147,6 +147,34 @@
     protected function onLink() {}
 
     /**
+     * 收到自定义菜单消息时触发，用于子类重写
+     *
+     * @return void
+     */    
+    protected function onClick() {}
+
+    /**
+     * 收到地理位置事件消息时触发，用于子类重写
+     *
+     * @return void
+     */    
+    protected function onEventLocation() {}
+
+    /**
+     * 收到语音消息时触发，用于子类重写
+     *
+     * @return void
+     */        
+    protected function onVoice() {}
+
+    /**
+     * 扫描二维码时触发，用于子类重写
+     *
+     * @return void
+     */        
+    protected function onScan() {}
+
+    /**
      * 收到未知类型消息时触发，用于子类重写
      *
      * @return void
@@ -207,6 +235,18 @@
               $this->onUnsubscribe();
               break;
 
+            case 'SCAN':
+              $this->onScan();
+              break;
+
+            case 'LOCATION':
+              $this->onEventLocation();
+              break;
+
+            case 'CLICK':
+              $this->onClick();
+              break;
+
           }
 
           break;
@@ -225,6 +265,10 @@
 
         case 'link':
           $this->onLink();
+          break;
+
+        case 'voice':
+          $this->onVoice();
           break;
 
         default:

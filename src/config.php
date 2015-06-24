@@ -1,9 +1,8 @@
 <?php
 
-$encodingAesKey = "";
-$token = "";
-$appId = "";
+  $encodingAesKey = "";
+  $token = "";
+  $appId = "";
+  
+  const $debugMode = TRUE;
 
-$debug_mode = TRUE;
-
-?>

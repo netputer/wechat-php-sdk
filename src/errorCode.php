@@ -18,17 +18,17 @@
  */
   class ErrorCode
   {
-    public const $OK = 0;
-    public const $ValidateSignatureError = -40001;
-    public const $ParseXmlError = -40002;
-    public const $ComputeSignatureError = -40003;
-    public const $IllegalAesKey = -40004;
-    public const $ValidateAppidError = -40005;
-    public const $EncryptAESError = -40006;
-    public const $DecryptAESError = -40007;
-    public const $IllegalBuffer = -40008;
-    public const $EncodeBase64Error = -40009;
-    public const $DecodeBase64Error = -40010;
-    public const $GenReturnXmlError = -40011;
+    public  $OK = 0;
+    public  $ValidateSignatureError = -40001;
+    public  $ParseXmlError = -40002;
+    public  $ComputeSignatureError = -40003;
+    public  $IllegalAesKey = -40004;
+    public  $ValidateAppidError = -40005;
+    public  $EncryptAESError = -40006;
+    public  $DecryptAESError = -40007;
+    public  $IllegalBuffer = -40008;
+    public  $EncodeBase64Error = -40009;
+    public  $DecodeBase64Error = -40010;
+    public  $GenReturnXmlError = -40011;
   }
 

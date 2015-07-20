@@ -45,7 +45,13 @@
      * @param string $token 验证信息
      * @param boolean $debug 调试模式，默认为关闭
      */
-    public function __construct($token, $aeskey, $appid, $debug = FALSE) {
+    public function __construct($config=array('token'=>'', 'aeskey'=>'', 'appid'=>'', 'debug' => FALSE)) {
+      
+      $token = $config['token'];
+      $aeskey = $config['aeskey'];
+      $appid = $config['appid'];
+      $debug = $config['debug'];
+      
       if (!$this->validateSignature($token)) {
         exit('签名验证失败');
       }

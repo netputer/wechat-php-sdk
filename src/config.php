@@ -4,5 +4,5 @@
   $token = "";
   $appId = "";
   
-  const $debugMode = TRUE;
+  $debugMode = TRUE;
 

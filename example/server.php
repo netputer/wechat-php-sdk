@@ -121,5 +121,10 @@
 
   }
 
-  $wechat = new MyWechat($token, $encodingAesKey, $appId, $debugMode);
+  $wechat = new MyWechat(array(
+      'token' => $token,
+      'aeskey' => $encodingAesKey,
+      'appid' => $appId,
+      'debug' => $debugMode
+  ));
   $wechat->run();

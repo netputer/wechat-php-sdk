@@ -40,28 +40,38 @@
     private $encrypted = false;
 
     /**
+     * Store post data from wechat server
+     *
+     * @var string
+     */
+    private $postStr;
+
+    /**
      * 初始化，判断此次请求是否为验证请求，并以数组形式保存
      *
      * @param string $token 验证信息
      * @param boolean $debug 调试模式，默认为关闭
      */
     public function __construct($config=array('token'=>'', 'aeskey'=>'', 'appid'=>'', 'debug' => FALSE)) {
-      
+
       $token = $config['token'];
       $aeskey = $config['aeskey'];
       $appid = $config['appid'];
       $debug = $config['debug'];
-      
+
       if (!$this->validateSignature($token)) {
         exit('签名验证失败');
       }
-      
+
       if ($this->isValidateIncomingConn()) {
         // 网址接入验证
         exit($_GET['echostr']);
       }
-      
-      if (!isset($GLOBALS['HTTP_RAW_POST_DATA'])) {
+
+      if ($_SERVER['REQUEST_METHOD'] == "POST") {
+        $this->postStr = file_get_contents("php://input");
+      }
+      if (!isset($this->postStr)) {
         exit('缺少数据');
       }
 
@@ -85,15 +95,15 @@
       $xml = '';
 
       if ($this->encrypted) {
-        $errCode = $this->msgCryptor->decryptMsg($_GET['msg_signature'], $_GET['timestamp'], $_GET['nonce'], $GLOBALS['HTTP_RAW_POST_DATA'], $xml);
+        $errCode = $this->msgCryptor->decryptMsg($_GET['msg_signature'], $_GET['timestamp'], $_GET['nonce'], $this->postStr, $xml);
 
         if ($errCode != 0) exit($errCode);
 
       } else {
-        $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
+        $xml = $this->postStr;
       }
 
-      $xml = (array) simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);        
+      $xml = (array) simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
 
       $this->request = array_change_key_case($xml, CASE_LOWER);
       // 将数组键名转换为小写，提高健壮性，减少因大小写不同而出现的问题
@@ -118,7 +128,7 @@
       if ( ! (isset($_GET['signature']) && isset($_GET['timestamp']) && isset($_GET['nonce']))) {
         return FALSE;
       }
-      
+
       $signature = $_GET['signature'];
       $timestamp = $_GET['timestamp'];
       $nonce = $_GET['nonce'];
@@ -195,28 +205,28 @@
      * 收到自定义菜单消息时触发，用于子类重写
      *
      * @return void
-     */    
+     */
     protected function onClick() {}
 
     /**
      * 收到地理位置事件消息时触发，用于子类重写
      *
      * @return void
-     */    
+     */
     protected function onEventLocation() {}
 
     /**
      * 收到语音消息时触发，用于子类重写
      *
      * @return void
-     */        
+     */
     protected function onVoice() {}
 
     /**
      * 扫描二维码时触发，用于子类重写
      *
      * @return void
-     */        
+     */
     protected function onScan() {}
 
     /**

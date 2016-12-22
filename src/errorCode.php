@@ -18,17 +18,16 @@
  */
   class ErrorCode
   {
-    public  $OK = 0;
-    public  $ValidateSignatureError = -40001;
-    public  $ParseXmlError = -40002;
-    public  $ComputeSignatureError = -40003;
-    public  $IllegalAesKey = -40004;
-    public  $ValidateAppidError = -40005;
-    public  $EncryptAESError = -40006;
-    public  $DecryptAESError = -40007;
-    public  $IllegalBuffer = -40008;
-    public  $EncodeBase64Error = -40009;
-    public  $DecodeBase64Error = -40010;
-    public  $GenReturnXmlError = -40011;
+    static  $OK = 0;
+    static  $ValidateSignatureError = -40001;
+    static  $ParseXmlError = -40002;
+    static  $ComputeSignatureError = -40003;
+    static  $IllegalAesKey = -40004;
+    static  $ValidateAppidError = -40005;
+    static  $EncryptAESError = -40006;
+    static  $DecryptAESError = -40007;
+    static  $IllegalBuffer = -40008;
+    static  $EncodeBase64Error = -40009;
+    static  $DecodeBase64Error = -40010;
+    static  $GenReturnXmlError = -40011;
   }
-
